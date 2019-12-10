@@ -1,0 +1,49 @@
+{
+  "name": "land",
+  "version": "1.0.0",
+  "description": "Personal lending page",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development run-p webpack:* watch:*",
+    "build:server": "webpack --config webpack/server.config.js",
+    "watch:server": "nodemon --inspect build/${npm_package_version}/server.bundle.js",
+    "webpack:server": "webpack --watch --config webpack/server.config.js",
+    "lint": "eslint **/*.ts",
+    "docker:build": "docker build -t dezmound/land:${npm_package_version} --build-arg VERSION=${npm_package_version} ."
+  },
+  "keywords": [],
+  "author": "Dmitrii Sulokhin",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/ejs": "^3.0.0",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.14",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "css-loader": "^3.3.0",
+    "eslint": "^6.7.2",
+    "eslint-config-standart": "^0.2.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.17.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "isomorphic-style-loader": "^5.1.0",
+    "mini-css-extract-plugin": "^0.8.0",
+    "nodemon": "^2.0.1",
+    "npm-run-all": "^4.1.5",
+    "style-loader": "^1.0.1",
+    "stylus": "^0.54.7",
+    "stylus-loader": "^3.0.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.3",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
+  },
+  "dependencies": {
+    "ejs": "^3.0.1",
+    "express": "^4.17.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
