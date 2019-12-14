@@ -1,10 +1,15 @@
+.ScreenMain {
+  overflow: hidden;
+  position: relative;
+}
+
 .ScreenMain__Personal {
   
 }
 
 .ScreenMain__Image_type_avatar {
-    width: 306px;
-    height: 324px;
+    width: 198px;
+    height: 208px;
 
     border-radius: 8px;
     border: 8px solid #fff;
@@ -13,15 +18,25 @@
 
     position: fixed;
 
-    bottom: 48px;
+    bottom: calc(40% - 104px);
     right: 60px;
 }
 
 .ScreenMain__FullName {
-    font-size: 2.5 rem;
+    font-size: 3rem;
 }
 
 .ScreenMain__Profession {
     color: #aeaeae;
     font-weight: normal;
+    font-size: 2.5rem;
+}
+
+.ScreenMain__Block_type_blue {
+  bottom: -60%;
+  width: 100%;
+  height: 100%;
+  background-color: #000fff;
+  position: absolute;
+  box-shadow: 0 -2px 3px 2px #dedede;
 }

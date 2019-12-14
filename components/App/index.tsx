@@ -1,14 +1,56 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'reset-css';
 
 import styl from './index.styl';
 import ScreenMain from '../ScreenMain';
+import makeClassName from '../../helpers/className';
+import ScreenGithub from '../ScreenGithub';
 
-console.log(styl)
+const cn = makeClassName(styl, 'App');
 
-const App = () => {
-  return <div className={styl.App}>
-    <ScreenMain />
+let observeMainScreenRef: string | ((instance: HTMLDivElement | null) => void) = '';
+
+interface ApplicationState {
+  isMainScreenFocused: boolean;
+}
+
+const attachMainAnchorObserver = (setState: React.Dispatch<React.SetStateAction<ApplicationState>>) => {
+  if (__isClient__) {
+    const observer = new IntersectionObserver((entries) => {
+      setState({
+        isMainScreenFocused: entries[0].isIntersecting
+      });
+  
+    });
+
+    let detachObserver;
+    
+    observeMainScreenRef = (instance: HTMLDivElement | null) => {
+      if (instance) {
+        observer.observe(instance);
+        detachObserver = () => observer.unobserve(instance);
+      }
+    }
+
+    return detachObserver;
+  }
+}
+
+const App: React.SFC = () => {
+  const [state, setState] = useState<ApplicationState>({
+    isMainScreenFocused: true
+  });
+
+  useEffect(() => {
+    const detach = attachMainAnchorObserver(setState);
+
+    return detach;
+  });
+  
+  return <div className={cn.toString()}>
+    <div id='mainScreenAnchor' ref={observeMainScreenRef} className={cn.e('MainScreenAnchor').toString()} ></div>
+    <ScreenMain focused={state.isMainScreenFocused} />
+    <ScreenGithub />
   </div>
 };
 

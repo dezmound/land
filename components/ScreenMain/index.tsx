@@ -6,7 +6,9 @@ import makeClassName from '../../helpers/className';
 
 import styl from './index.styl';
 
-export interface ScreenMainProps {}
+export interface ScreenMainProps {
+  focused: boolean
+}
 
 const cn = makeClassName(styl, 'ScreenMain');
 
@@ -16,6 +18,7 @@ const ScreenMain: React.SFC<ScreenMainProps> = () => {
   });
 
   return Screen({
+    className: cn.toString(),
     render () {
       return <>
         <div className={cn.e('Personal').toString()}>
@@ -26,6 +29,7 @@ const ScreenMain: React.SFC<ScreenMainProps> = () => {
             <h2>Frontend developer</h2>
           </div>
         </div>
+        <div className={cn.e('Block').m({ type: 'blue' }).toString()}></div>
         <Image
           className={cn.e('Image').m({ type: 'avatar' }).toString()}
           src='/static/pe-gjPf_vtA.jpg'
