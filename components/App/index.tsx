@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'reset-css';
 
 import styl from './index.styl';
@@ -14,7 +14,7 @@ interface ApplicationState {
   isMainScreenFocused: boolean;
 }
 
-const attachMainAnchorObserver = (setState: React.Dispatch<React.SetStateAction<ApplicationState>>) => {
+const attachMainAnchorObserver = (setState: React.Dispatch<React.SetStateAction<ApplicationState>>, ) => {
   if (__isClient__) {
     const observer = new IntersectionObserver((entries) => {
       setState({
@@ -41,6 +41,8 @@ const App: React.SFC = () => {
     isMainScreenFocused: true
   });
 
+  const ref = useRef(null)
+
   useEffect(() => {
     const detach = attachMainAnchorObserver(setState);
 
@@ -48,7 +50,7 @@ const App: React.SFC = () => {
   });
   
   return <div className={cn.toString()}>
-    <div id='mainScreenAnchor' ref={observeMainScreenRef} className={cn.e('MainScreenAnchor').toString()} ></div>
+    <div id='mainScreenAnchor' ref={ref} className={cn.e('MainScreenAnchor').toString()} ></div>
     <ScreenMain focused={state.isMainScreenFocused} />
     <ScreenGithub />
   </div>
