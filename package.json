@@ -4,13 +4,13 @@
   "description": "Personal lending page",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development run-p webpack:* watch:*",
+    "dev": "cross-env-shell NODE_ENV=development run-p webpack:* watch:*",
     "build:server": "webpack --config webpack/server.config.js",
     "watch:client": "webpack --watch --config webpack/client.config.js",
-    "watch:server": "nodemon --inspect build/${npm_package_version}/server.bundle.js",
+    "watch:server": "cross-env-shell nodemon --inspect build/${npm_package_version}/server.bundle.js",
     "webpack:server": "webpack --watch --config webpack/server.config.js",
     "lint": "eslint **/*.ts",
-    "docker:build": "docker build -t dezmound/land:${npm_package_version} --build-arg VERSION=${npm_package_version} ."
+    "docker:build": "cross-env-shell docker build -t dezmound/land:${npm_package_version} --build-arg VERSION=${npm_package_version} ."
   },
   "keywords": [],
   "author": "Dmitrii Sulokhin",
@@ -23,6 +23,7 @@
     "@types/react-dom": "^16.9.4",
     "@typescript-eslint/eslint-plugin": "^2.10.0",
     "@typescript-eslint/parser": "^2.10.0",
+    "cross-env": "^6.0.3",
     "css-loader": "^3.3.0",
     "eslint": "^6.7.2",
     "eslint-config-standart": "^0.2.0",

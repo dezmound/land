@@ -1,6 +1,9 @@
 .ScreenMain {
   overflow: hidden;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ScreenMain__Personal {
@@ -8,11 +11,11 @@
 }
 
 .ScreenMain__Image_type_avatar {
-    width: 198px;
+    width: 196px;
     height: 208px;
 
     border-radius: 8px;
-    border: 8px solid #fff;
+    border: 2px solid #fff;
 
     box-shadow: 0 0 2px 2px #dedede;
 
@@ -33,10 +36,20 @@
 }
 
 .ScreenMain__Block_type_blue {
-  bottom: -60%;
+  bottom: calc(-100% + 64px);
   width: 100%;
   height: 100%;
   background-color: #000fff;
   position: absolute;
   box-shadow: 0 -2px 3px 2px #dedede;
+}
+
+.ScreenMain__Image {
+  transition: .3s bottom cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.ScreenMain__Image_fixed {
+  bottom: calc(100% - 108px);
+  max-width: 80px;
+  max-height: 84px;
 }

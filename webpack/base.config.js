@@ -1,3 +1,4 @@
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { join } = require('path');
 const { version } = require('../package.json');
 const { DefinePlugin } = require('webpack');
@@ -23,9 +24,17 @@ module.exports = (isClient = false) => ({
         test: /\.(styl|css)/,
         use: [
           {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: isDev
+            }
+          },
+          {
             loader: 'css-loader',
             options: {
-              modules: true
+              modules: {
+                localIdentName: isDev ? '[local]' : '[hash:base64]'
+              }
             }
           },
           'stylus-loader'
@@ -34,6 +43,10 @@ module.exports = (isClient = false) => ({
     ]
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: isDev ? '[name].css' : '[name].css',
+      chunkFilename: isDev ? '[id].css' : '[id].[hash].css'
+    }),
     new DefinePlugin({
       __isClient__: String(isClient),
       __isServer__: String(!isClient)

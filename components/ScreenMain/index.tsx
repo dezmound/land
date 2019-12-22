@@ -12,7 +12,7 @@ export interface ScreenMainProps {
 
 const cn = makeClassName(styl, 'ScreenMain');
 
-const ScreenMain: React.SFC<ScreenMainProps> = () => {
+const ScreenMain: React.SFC<ScreenMainProps> = ({ focused }) => {
   const [state, setState] = useState({
     isAvatarLoaded: false
   });
@@ -31,7 +31,7 @@ const ScreenMain: React.SFC<ScreenMainProps> = () => {
         </div>
         <div className={cn.e('Block').m({ type: 'blue' }).toString()}></div>
         <Image
-          className={cn.e('Image').m({ type: 'avatar' }).toString()}
+          className={cn.e('Image').m({ type: 'avatar', fixed: !focused }).toString()}
           src='/static/pe-gjPf_vtA.jpg'
           onLoad={() => console.log('avatar loaded')}
         />

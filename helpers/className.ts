@@ -57,6 +57,10 @@ export class ClassName {
     return copy;
   }
 
+  private getHash(entityName = '') {
+    return this.cssModule[entityName] || entityName;
+  }
+
   private getEntityHash (block: string): string;
   private getEntityHash (block: string, elem: string): string;
   private getEntityHash (block: string, mods: Mods): string;
@@ -67,14 +71,14 @@ export class ClassName {
 
     switch(typeof elemOrMods) {
       case 'string': {
-        className += ' ' + (this.cssModule[`${block}__${elemOrMods}`] || '');
+        className = this.getHash(`${block}__${elemOrMods}`);
 
         if (mods) {
           for (const modName in mods) {
             if (typeof mods[modName] === 'boolean' && mods[modName]) {
-              className += ' ' + (this.cssModule[`${block}__${elemOrMods}_${modName}`]);
+              className += ' ' + this.getHash(`${block}__${elemOrMods}_${modName}`);
             } else if (mods[modName]) {
-              className += ' ' + (this.cssModule[`${block}__${elemOrMods}_${modName}_${mods[modName]}`]);
+              className += ' ' + this.getHash(`${block}__${elemOrMods}_${modName}_${mods[modName]}`);
             }
           }
         }
@@ -85,9 +89,9 @@ export class ClassName {
       case 'object': {
         for (const modName in elemOrMods) {
           if (typeof elemOrMods[modName] === 'boolean' && elemOrMods[modName]) {
-            className += ' ' + (this.cssModule[`${block}_${modName}`] || '');
+            className += ' ' + this.getHash(`${block}_${modName}`);
           } else if (elemOrMods[modName]) {
-            className += ' ' + (this.cssModule[`${block}_${modName}_${elemOrMods[modName]}`] || '');
+            className += ' ' + this.getHash(`${block}_${modName}_${elemOrMods[modName]}`);
           }
         }
 
@@ -98,9 +102,9 @@ export class ClassName {
         if (mods) {
           for (const modName in mods) {
             if (typeof mods[modName] === 'boolean' && mods[modName]) {
-              className += ' ' + (this.cssModule[`${block}_${modName}`] || '');
+              className += ' ' + this.getHash(`${block}_${modName}`);
             } else if (mods[modName]) {
-              className += ' ' + (this.cssModule[`${block}_${modName}_${mods[modName]}`] || '');
+              className += ' ' + this.getHash(`${block}_${modName}_${mods[modName]}`);
             }
           }
         }
