@@ -1,16 +1,17 @@
 import React from 'react';
-import Screen from '../Screen';
+import Screen, { BaseScreenProps } from '../Screen';
 
-export interface ScreenGithubProps {
+export interface ScreenGithubProps extends BaseScreenProps {
 
 }
 
 const ScreenGithub: React.SFC<ScreenGithubProps> = (props) => {
-  return Screen({
-    render() {
+  return <Screen
+    {...props}
+    render={() => {
       return <div></div>;
-    }
-  })
+    }}
+  />
 };
 
 export default ScreenGithub;

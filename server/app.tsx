@@ -7,6 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { __express } from 'ejs';
 
 import App from '../components/App';
+import { renderHandle } from './handles';
 
 const app = express();
 
@@ -17,6 +18,8 @@ app.use(express.static('build'));
 
 app.engine('.ejs', __express);
 
+app.get('/render', renderHandle);
+
 app.get('/', (req, res) => {
   res.render('index', {
     year: new Date().getUTCFullYear(),
@@ -24,7 +27,7 @@ app.get('/', (req, res) => {
       <App />
     ),
     version: config.version
-  })
+  });
 });
 
 app.listen(config.port, () => {

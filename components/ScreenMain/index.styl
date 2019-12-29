@@ -1,45 +1,36 @@
 .ScreenMain {
   overflow: hidden;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .ScreenMain__Personal {
-  
+  margin: 24px 0 0 24px;
+}
+
+.ScreenMain__FullName {
+  margin-bottom: 12px;
 }
 
 .ScreenMain__Image_type_avatar {
     width: 196px;
-    height: 208px;
+    height: 196px;
 
-    border-radius: 8px;
+    border-radius: 50%;
     border: 2px solid #fff;
 
     box-shadow: 0 0 2px 2px #dedede;
 
     position: fixed;
 
-    bottom: calc(40% - 104px);
+    bottom: calc(20% - 104px);
     right: 60px;
-}
-
-.ScreenMain__FullName {
-    font-size: 3rem;
-}
-
-.ScreenMain__Profession {
-    color: #aeaeae;
-    font-weight: normal;
-    font-size: 2.5rem;
 }
 
 .ScreenMain__Block_type_blue {
   bottom: calc(-100% + 64px);
   width: 100%;
   height: 100%;
-  background-color: #000fff;
+  background-color: #38598c;
   position: absolute;
   box-shadow: 0 -2px 3px 2px #dedede;
 }
@@ -51,5 +42,5 @@
 .ScreenMain__Image_fixed {
   bottom: calc(100% - 108px);
   max-width: 80px;
-  max-height: 84px;
+  max-height: 80px;
 }

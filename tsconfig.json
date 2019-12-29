@@ -8,7 +8,7 @@
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "typeRoots": [
-      "typings"
+      "./typings"
     ],
     "outDir": "compiled",
     "jsx": "react",

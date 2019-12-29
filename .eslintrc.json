@@ -18,17 +18,16 @@
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module",
+        "sourceType": "module"
     },
     "plugins": [
         "@typescript-eslint",
         "react"
     ],
     "rules": {
-        "semi": "off",
+        "semi": ["error", "always"],
         "no-dupe-class-members": "off",
         "@typescript-eslint/no-unused-vars": "error",
-        "react/prop-types": "off",
-        "@typescript-eslint/no-dupe-class-members": "error"
+        "react/prop-types": "off"
     }
 }

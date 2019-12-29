@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import memoize from 'fast-memoize';
 import 'reset-css';
 
 import styl from './index.styl';
@@ -7,56 +8,23 @@ import makeClassName from '../../helpers/className';
 import ScreenGithub from '../ScreenGithub';
 
 const cn = makeClassName(styl, 'App');
-
-interface ApplicationState {
-  isMainScreenFocused: boolean;
-}
-
-const attachMainAnchorObserver = (
-  setState: React.Dispatch<React.SetStateAction<ApplicationState>>,
-  mainAnchorRef: React.RefObject<HTMLDivElement>
+const getScreenOnFocusHandler = memoize((
+  setActiveSectionName: React.Dispatch<React.SetStateAction<string>>,
+  activeSectionName: string
   ) => {
-  if (__isClient__) {
-    const observer = new IntersectionObserver((entries) => {
-      setState({
-        isMainScreenFocused: entries[0].isIntersecting
-      });
-  
-      console.log(entries)
-    });
-
-    let detachObserver;
-    
-    if (mainAnchorRef.current) {
-      observer.observe(mainAnchorRef.current);
-      detachObserver = () => {
-        if (mainAnchorRef.current) { 
-          observer.unobserve(mainAnchorRef.current);
-        }
-      }
+  return (isFocused: boolean) => {
+    if (isFocused) {
+      setActiveSectionName(activeSectionName);
     }
-
-    return detachObserver;
   }
-}
+});
 
-const App: React.SFC = () => {
-  const [state, setState] = useState<ApplicationState>({
-    isMainScreenFocused: true
-  });
+const App: React.FC = () => {
+  const [activeSectionName, setActiveSectionName] = useState('About');
 
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const detach = attachMainAnchorObserver(setState, ref);
-
-    return detach;
-  }, []);
-  
   return <div className={cn.toString()}>
-    <div id='mainScreenAnchor' ref={ref} className={cn.e('MainScreenAnchor').toString()} ></div>
-    <ScreenMain focused={state.isMainScreenFocused} />
-    <ScreenGithub />
+    <ScreenMain onFocusChange={getScreenOnFocusHandler(setActiveSectionName, 'About')} />
+    <ScreenGithub onFocusChange={getScreenOnFocusHandler(setActiveSectionName, 'Projects')} />
   </div>
 };
 
