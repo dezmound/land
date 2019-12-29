@@ -12,30 +12,47 @@ export class ClassName {
   private element?: string;
   private mods?: Mods;
 
+  private injectSet: Set<ClassName>;
+
   constructor (cssModule: CssModule, block: string) {
     this.cssModule = cssModule;
     this.block = block;
+    this.injectSet = new Set();
   }
 
-  e(element: string): ClassName {
+  e (element: string): ClassName {
     const copy = this.copy();
     copy.element = element;
 
+    const newInjectSet = new Set<ClassName>();
+    for (const className of this.injectSet.values()) {
+      newInjectSet.add(className.e(element));
+    }
+
+    copy.injectSet = newInjectSet;
+
     return copy;
   }
 
-  m(mods: Mods): ClassName {
+  m (mods: Mods): ClassName {
     const copy = this.copy();
     copy.mods = mods;
 
+    const newInjectSet = new Set<ClassName>();
+    for (const className of this.injectSet.values()) {
+      newInjectSet.add(className.m(mods));
+    }
+
+    copy.injectSet = newInjectSet;
+
     return copy;
   }
 
-  concat(classString?: string): ClassName {
+  concat (classString?: string): ClassName {
     const copy = this.copy();
     copy.cachedClassName += (classString || '').trim();
 
-    return copy; 
+    return copy;
   }
 
   mix(className: ClassName): ClassName;
@@ -57,7 +74,7 @@ export class ClassName {
     return copy;
   }
 
-  private getHash(entityName = '') {
+  private getHash (entityName = '') {
     return this.cssModule[entityName] || entityName;
   }
 
@@ -69,7 +86,7 @@ export class ClassName {
   private getEntityHash (block: string, elemOrMods?: string | Mods, mods?: Mods): string {
     let className = String(this.cssModule[block] || '');
 
-    switch(typeof elemOrMods) {
+    switch (typeof elemOrMods) {
       case 'string': {
         className = this.getHash(`${block}__${elemOrMods}`);
 
@@ -117,17 +134,29 @@ export class ClassName {
   }
 
   toString (): string {
-    return String(this.getEntityHash(this.block, this.element, this.mods) + ' ' + this.cachedClassName).trim();
+    const injectedClassNames = this.injectSet.values();
+    let resultClassName: string = String(this.getEntityHash(this.block, this.element, this.mods) + ' ' + this.cachedClassName).trim();
+
+    for (const injectedClassName of injectedClassNames) {
+      resultClassName += ` ${injectedClassName}`;
+    }
+
+    return resultClassName;
   }
 
-  copy(): ClassName {
-    const copy = new (<typeof ClassName>this.constructor)(this.cssModule, this.block);
+  copy (): ClassName {
+    const copy = new (<typeof ClassName> this.constructor)(this.cssModule, this.block);
 
     copy.element = this.element;
     copy.mods = this.mods;
     copy.cachedClassName = this.cachedClassName;
+    copy.injectSet = this.injectSet;
 
     return copy;
+  }
+
+  inject (className: ClassName) {
+    this.injectSet.add(className);
   }
 }
 

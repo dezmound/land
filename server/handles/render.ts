@@ -113,6 +113,8 @@ export const renderHandle: RequestHandler = async (req, res) => {
     quality: parsedQuality
   });
 
+  await browser.close();
+
   renderCache.set(path, resolution, quality, screenshotBuffer);
 
   res.setHeader('content-type', 'image/jpeg');

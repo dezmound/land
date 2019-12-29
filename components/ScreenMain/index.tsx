@@ -5,7 +5,6 @@ import Image from '../Image';
 import makeClassName from '../../helpers/className';
 
 import styl from './index.styl';
-import ProjectFeed from '../ProjectsFeed';
 
 const cn = makeClassName(styl, 'ScreenMain');
 
@@ -14,7 +13,7 @@ export interface ScreenMainProps extends BaseScreenProps {
 
 const ScreenMain: React.FC<ScreenMainProps> = ({ className, onFocusChange, sectionId }) => {
   const [isFocused, setIsFocused] = useState(true);
-  
+
   return <Screen
     sectionId={sectionId || 'ScreenMain'}
     className={cn.concat(className).toString()}
@@ -27,24 +26,23 @@ const ScreenMain: React.FC<ScreenMainProps> = ({ className, onFocusChange, secti
     }}
     render={() => {
       return <>
-          <div className={cn.e('Personal').toString()}>
-            <div className={cn.e('FullName').toString()}>
-              <h1>Sulokhin Dmitrii</h1>
-            </div>
-            <div className={cn.e('Profession').toString()}>
-              <h2>Frontend developer</h2>
-            </div>
+        <div className={cn.e('Personal').toString()}>
+          <div className={cn.e('FullName').toString()}>
+            <h1>Sulokhin Dmitrii</h1>
           </div>
-          <ProjectFeed />
-          <div className={cn.e('Block').m({ type: 'blue' }).toString()}></div>
-          <Image
-            className={cn.e('Image').m({ type: 'avatar', fixed: !isFocused }).toString()}
-            src='/static/pe-gjPf_vtA.jpg'
-            onLoad={() => console.log('avatar loaded')}
-          />
-        </>
+          <div className={cn.e('Profession').toString()}>
+            <h2>Frontend developer</h2>
+          </div>
+        </div>
+        <div className={cn.e('Block').m({ type: 'blue' }).toString()}></div>
+        <Image
+          className={cn.e('Image').m({ type: 'avatar', fixed: !isFocused }).toString()}
+          src='/static/pe-gjPf_vtA.jpg'
+          onLoad={() => console.log('avatar loaded')}
+        />
+      </>;
     }}
-  />
-}
+  />;
+};
 
 export default ScreenMain;

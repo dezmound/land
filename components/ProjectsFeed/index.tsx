@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import styl from './index.styl';
-import makeClassName from '../../helpers/className';
+import makeClassName, { ClassName } from '../../helpers/className';
 
 const cn = makeClassName(styl, 'ProjectsFeed');
 
@@ -17,7 +17,8 @@ const fetchProjects = async (): Promise<Github.Repo[]> => {
 
 export interface ProjectFeedProps {
   projects?: Github.Repo[],
-  className?: string
+  className?: string,
+  injectClassName?: ClassName
 }
 
 const getRepoImgSrc = (name: string, resolution: string = '1000:1000', quantity: string = '75') => {
@@ -38,10 +39,14 @@ const drawProject = (project: Github.Repo) => {
   </div>;
 };
 
-const ProjectFeed: React.FC<ProjectFeedProps> = ({ projects, className }) => {
+const ProjectFeed: React.FC<ProjectFeedProps> = ({ projects, className, injectClassName }) => {
   const [projectsInState, setProjects] = useState(projects || []);
 
   useEffect(() => {
+    if (injectClassName) {
+      cn.inject(injectClassName);
+    }
+
     fetchProjects().then((projects) => {
       setProjects(projects);
     });
